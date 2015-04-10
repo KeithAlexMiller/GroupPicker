@@ -8,26 +8,52 @@ namespace ConsoleApplication3
 {
     class Program
     {
-        static List<string> studentList = new List<string>() { "David", "Umar", "Matt", "Aaron", "Mahmoud", "Mitch", "Kris", "Ryan", "Coulton", "Mac", "Lamond", "Nathan", "Keith" };
         
         public static void Main(string[] args)
         {
-            List<string> currentGroupList = new List<string>();
-            Random rnd = new Random ();
-            Console.WriteLine(PickGroup(studentList, 4));
+            List<string> studentList = new List<string>() { "David", "Umar", "Matt", "Aaron", "Mahmoud", "Mitch", "Kris", "Ryan", "Coulton", "Mac", "Lamond", "Nathan", "Keith" };
+            PickGroup(studentList, 4);
+            Console.ReadKey();
         }
-        public static int PickGroup(List<string> studentList, int groupSize)
+        public static void PickGroup(List<string> groupList, int groupSize)
         {
+            List<string> currentGroupList = new List<string>();
             int groupNumber = 1;
             //int count = studentList.Count();
-            int index = Random.Next(studentList.Count);
-            // int numberOfStudents = 124 ---may not be be needed
-
-            while (count > 0)
+            Random rnd = new Random();
+            string currentStudent = string.Empty;
+            while (groupList.Count > 0)
             {
-                
-                masterStudentList.random(0, 4);
-                // List add current student to current group list
+                int index = rnd.Next(groupList.Count);
+                currentStudent = groupList[index];
+                if (groupList.Count > groupSize)
+                {
+                    // get groupSize# of currentStudent and add to currentGroupList
+                    currentGroupList.Add(currentStudent); // do (groupSize) times;
+                    groupList.RemoveAt(index);
+                }
+                else if (groupList.Count <= groupSize && groupList.Count > 0)
+                {
+                    currentGroupList.Add(currentStudent); 
+                    groupList.RemoveAt(index);
+                }
+                if (currentGroupList.Count == groupSize)
+                {
+                    Console.WriteLine("Group: " + groupNumber);
+                    Console.WriteLine(currentGroupList[0]);
+                    Console.WriteLine(currentGroupList[1]);
+                    Console.WriteLine(currentGroupList[2]);
+                    Console.WriteLine(currentGroupList[3]);
+                    currentGroupList.Clear();
+                    groupNumber++;
+                }
+                else if (currentGroupList.Count < groupSize)
+                {
+                    Console.WriteLine("Group: " + groupNumber);
+                    Console.WriteLine(currentGroupList[0]);
+                    currentGroupList.Clear();
+                }
+
             }
         }
     }
